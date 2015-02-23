@@ -103,16 +103,14 @@ for aloj in doc:
 ciudades = []
 for hot in hoteles:
 	if str(hot["municipality"]) not in ciudades:
-		ciudades.append(hot["municipality"])
-ciudades.sort()
-#Una vez ordenada la lista de ciudades, iremos haciendo print mientras se va recorriendo la lista de alojamientos, de esta forma, al estar las
-#ciudades ordenadas conseguiremos el orden que deseamos.
-for aloj in doc:
-	for ciudad in ciudades:
-		if str(aloj["municipality"]) == ciudad:
-			print str(aloj["municipality"]) + " - " + str(aloj["documentName"])
-			break
+		ciudades.append(str(hot["municipality"]))
 
+#Ahora se irá recorriendo la lista de alojamientos de forma ordenada sin modificar la original, de esta forma, al estar las
+#ciudades ordenadas conseguiremos el orden que deseamos.
+for ciudad in sorted(ciudades):
+	for hot in hoteles:
+		if ciudad == str(hot["municipality"]):
+			print ciudad + " - " + str(hot["municipality"])
 
 
 
