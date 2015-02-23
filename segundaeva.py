@@ -9,7 +9,7 @@ raiz = doc.getroot()
 localidad = raw_input("Dame el nombre de una localidad:  ").upper()
 locales = raiz.findall("row")
 for local in locales:
-	if local.find("locality").text == localidad:
+	if local.find("municipality").text == localidad:
 		print str(local.find("documentName").text) + " - " + str(local.find("phoneNumber").text) + " - " + str(local.find("email").text)
 
 print " ----------------------------------------------------------------------- "
@@ -39,16 +39,16 @@ for local in locales:
 #	Si no está la localidad en localidades se agrega a la lista
 	resp = False
 	for loc in localidades:
-		if local.find("locality").text == loc[0]:
+		if local.find("municipality").text == loc[0]:
 			resp = True
 			#Si resulta que la ciudad está en la lista, accedemos a su variable y la aumentamos en uno
 			if local.find("michelinStar").text != None:
 				loc[1] = loc[1] + int(local.find("michelinStar").text)
 	if resp == False or len(localidades) == 0:
 		if local.find("michelinStar").text != None:
-			localidades.append([local.find("locality").text,int(local.find("michelinStar").text)])
+			localidades.append([local.find("municipality").text,int(local.find("michelinStar").text)])
 		else:
-			localidades.append([local.find("locality").text,0])
+			localidades.append([local.find("municipality").text,0])
 
 #Mostramos la lista de localidades y sus respectivas estrellas Michelín.
 for loc in localidades:
@@ -82,7 +82,7 @@ print " --------------------------------------------------------------- "
 for aloj in doc:
 	if aloj["documentName"] == hotel:
 		print "HOTEL: " + aloj["documentName"]
-		print "SITUADA EN LA LOCALIDAD DE " + aloj["locality"] + " EN LA DIRECCION " + aloj["address"]
+		print "SITUADA EN LA LOCALIDAD DE " + aloj["municipality"] + " EN LA DIRECCION " + aloj["address"]
 		if aloj["documentDescription"] != None:
 			print aloj["documentDescription"]
 		else:
@@ -90,10 +90,36 @@ for aloj in doc:
 		if aloj["web"] != None:
 			print "VISITA " + aloj["web"] + " PARA MAS INFORMACION"
 
+print " --------------------------------------------------------------- "
+
 #Dado el número de estrellas concreto, mostrar en el formato anterior los hoteles ordenados alfabéticamente por la localidad en la que se encuentran.
-estrellas = int(raw_input("Dame un número de estrellas: "))
+estrellas = str(raw_input("Dame un número de estrellas: "))
 hoteles = []
 #Almacenamos los hoteles que coinciden con la categoría de entrada
 for aloj in doc:
-	if int(aloj["category"]) == estrellas:
+	if str(aloj["category"]) == estrellas:
 		hoteles.append(aloj)
+#Ahora almacenamos las ciudades de los hoteles con la categoría de entrada
+ciudades = []
+for hot in hoteles:
+	if str(hot["municipality"]) not in ciudades:
+		ciudades.append(hot["municipality"])
+ciudades.sort()
+#Una vez ordenada la lista de ciudades, iremos haciendo print mientras se va recorriendo la lista de alojamientos, de esta forma, al estar las
+#ciudades ordenadas conseguiremos el orden que deseamos.
+for aloj in doc:
+	for ciudad in ciudades:
+		if str(aloj["municipality"]) == ciudad:
+			print str(aloj["municipality"]) + " - " + str(aloj["documentName"])
+			break
+
+
+
+
+
+
+
+
+
+
+
