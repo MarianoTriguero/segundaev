@@ -141,13 +141,25 @@ for x in ciudadsurfsorted:
 	print x + " - " + str(ciudadsurfsorted[x]) + " alojamientos habilitados para surf."
 
 pausa=raw_input("\n --------------------------------------------------------- \n")
+
 #XML + JSON
 
 #Dado el nombre de un alojamiento, muestra los locales situados en la misma localidad que el alojamiento.
 
+#Obtenemos la ciudad de alojamiento
+entrada = raw_input("Dame el nombre de un alojamiento: ")
+for x in doc1:
+	if str(x["documentName"]) == entrada:
+		objetivo = str(x["municipality"])
 
+#Buscamos los locales que se encuentran en la ciudad
+restaurantes = []
+for local in locales:
+	if str(local.find("municipality").text) == objetivo:
+		restaurantes.append(local)
 
-
+for rest in restaurantes:
+	print rest.find("documentName").text
 
 
 
