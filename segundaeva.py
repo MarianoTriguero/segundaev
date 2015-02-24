@@ -13,7 +13,7 @@ for local in locales:
 	if local.find("municipality").text == localidad:
 		print str(local.find("documentName").text) + " - " + str(local.find("phoneNumber").text) + " - " + str(local.find("email").text)
 
-print " ----------------------------------------------------------------------- "
+pausa=raw_input("\n --------------------------------------------------------- \n")
 #Muestra solamente los locales que no tengan acceso para discapacitados dado un tipo de local y un dominio de correo electrónico.
 
 #De esta manera obtengo todos los tipos de locales que hay para elegir
@@ -32,7 +32,7 @@ for local in locales:
 		if dominio in str(local.find("email").text):
 			print local.find("documentName").text
 
-print " ------------------------------------------------------------------------ "
+pausa=raw_input("\n --------------------------------------------------------- \n")
 #Cuenta cuantos locales con estrellas Michelín hay por cada población.
 
 localidades = []
@@ -57,7 +57,7 @@ for loc in localidades:
 		print loc[0] + " - " + str(loc[1]) + " estrellas Michelín"
 
 cont = raw_input("Presiona enter para continuar.")
-print " --------------------------------------------------------------- "
+pausa=raw_input("\n --------------------------------------------------------- \n")
 
 #Busca cuales son los locales recomendados por guías turísticas e indica si estos tienen bodega privada o no.
 for local in locales:
@@ -70,17 +70,17 @@ for local in locales:
 #JSON
 import json
 f=open("alojamientos.json","r")
-doc = json.load(f)
+doc1 = json.load(f)
 hotel = raw_input("Dame el nombre de un alojamiento: ")
 
-print " --------------------------------------------------------------- "
+pausa=raw_input("\n --------------------------------------------------------- \n")
 
 #Dado el nombre de un hotel, mostrar su nombre, dirección, web y descripción en el siguiente formato:
 #HOTEL: “NOMBRE HOTEL”
 #SITUADA EN LA “LOCALIDAD” DE DONDE SEA EN LA CALLE/AVENIDA/PLAZA”
 #“DESCRIPCION”
 #VISITA “WEB DEL HOTEL” PARA MÁS INFORMACIÓN.
-for aloj in doc:
+for aloj in doc1:
 	if aloj["documentName"] == hotel:
 		print "HOTEL: " + aloj["documentName"]
 		print "SITUADA EN LA LOCALIDAD DE " + aloj["municipality"] + " EN LA DIRECCION " + aloj["address"]
@@ -91,14 +91,14 @@ for aloj in doc:
 		if aloj["web"] != None:
 			print "VISITA " + aloj["web"] + " PARA MAS INFORMACION"
 
-print " --------------------------------------------------------------- "
+pausa=raw_input("\n --------------------------------------------------------- \n")
 
 #Dado el número de estrellas concreto, mostrar en el formato anterior los hoteles ordenados alfabéticamente por la localidad
 #en la que se encuentran.
 estrellas = str(raw_input("Dame un número de estrellas: "))
 hoteles = []
 #Almacenamos los hoteles que coinciden con la categoría de entrada
-for aloj in doc:
+for aloj in doc1:
 	if str(aloj["category"]) == estrellas:
 		hoteles.append(aloj)
 #Ahora almacenamos las ciudades de los hoteles con la categoría de entrada
@@ -114,13 +114,15 @@ for ciudad in sorted(ciudades):
 		if ciudad == str(hot["municipality"]):
 			print ciudad + " - " + str(hot["municipality"])
 
+pausa=raw_input("\n --------------------------------------------------------- \n")
+
 #Necesitamos saber cual es el ranking de las mejores ciudades para hacer surf. Para ello contaremos las ciudades que tengan 
 #más alojamientos con posibilidad de hacer surf y las ordenaremos en orden descendente.
 
 surf = []
 ciudadsurf = {}
 #Buscamos los alojamientos con surfing
-for aloj in doc:
+for aloj in doc1:
 	if str(aloj["surfing"]) != "":
 		surf.append(aloj)
 
@@ -137,6 +139,15 @@ ciudadsurfsorted = OrderedDict(sorted(ciudadsurf.items(), key=lambda t: t[1], re
 
 for x in ciudadsurfsorted:
 	print x + " - " + str(ciudadsurfsorted[x]) + " alojamientos habilitados para surf."
+
+pausa=raw_input("\n --------------------------------------------------------- \n")
+#XML + JSON
+
+#Dado el nombre de un alojamiento, muestra los locales situados en la misma localidad que el alojamiento.
+
+
+
+
 
 
 
