@@ -6,8 +6,9 @@ from collections import OrderedDict
 doc = etree.parse("restaurantes.xml")
 raiz = doc.getroot()
 
-#---------------------------------------------- XML ------------------------------------------
+print "------------------------------ XML -----------------------------------\n"
 #Dado el nombre de una localidad, muestra los nombres, teléfonos y los e-mails de los locales que estén dentro de esa localidad
+print "Después de que introduzcas el nombre de una localidad, se mostrará el nombre, teléfono y el email de los locales de esa localidad"
 localidad = raw_input("Dame el nombre de una localidad:  ").upper()
 locales = raiz.findall("row")
 for local in locales:
@@ -16,7 +17,7 @@ for local in locales:
 
 pausa=raw_input("\n --------------------------------------------------------- \n")
 #Muestra solamente los locales que no tengan acceso para discapacitados dado un tipo de local y un dominio de correo electrónico.
-
+print "Se van a mostrar los locales que no tienen acceso para discapacitados introduciendo un tipo de local y la parte de un dominio de correo electrónico."
 #De esta manera obtengo todos los tipos de locales que hay para elegir
 tiposrestaurante = []
 for local in locales:
@@ -29,9 +30,8 @@ busqueda = raw_input("¿Qué tipo quieres buscar?\n")
 dominio = raw_input("Con qué dominio de correo quieres buscar?\n")#@loquesea.loquesea
 #Con esto buscamos el local indicándole el tipo y el dominio
 for local in locales:
-	if local.find("restorationType").text == busqueda:
-		if dominio in str(local.find("email").text):
-			print local.find("documentName").text
+	if local.find("restorationType").text == busqueda and dominio in str(local.find("email").text) and local.find("accesibility").text == None:
+		print local.find("documentName").text
 
 pausa=raw_input("\n --------------------------------------------------------- \n")
 #Cuenta cuantos locales con estrellas Michelín hay por cada población.
@@ -207,7 +207,6 @@ for local in locales:
 #Mostramos las marcas y la cantidad de repeticiones
 for x in marcas:
 	print "Marca: " + x + " se repite " + str(marcas[x]) + " veces."
-
 
 
 
