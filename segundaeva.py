@@ -8,7 +8,7 @@ raiz = doc.getroot()
 
 print "------------------------------ XML -----------------------------------\n"
 #Dado el nombre de una localidad, muestra los nombres, teléfonos y los e-mails de los locales que estén dentro de esa localidad
-print "Después de que introduzcas el nombre de una localidad, se mostrará el nombre, teléfono y el email de los locales de esa localidad"
+print "Después de que introduzcas el nombre de una localidad, se mostrará el nombre, teléfono y el email de los locales de esa localidad\n"
 localidad = raw_input("Dame el nombre de una localidad:  ").upper()
 locales = raiz.findall("row")
 for local in locales:
@@ -17,7 +17,7 @@ for local in locales:
 
 pausa=raw_input("\n --------------------------------------------------------- \n")
 #Muestra solamente los locales que no tengan acceso para discapacitados dado un tipo de local y un dominio de correo electrónico.
-print "Se van a mostrar los locales que no tienen acceso para discapacitados introduciendo un tipo de local y la parte de un dominio de correo electrónico."
+print "Se van a mostrar los locales que no tienen acceso para discapacitados introduciendo un tipo de local y la parte de un dominio de correo electrónico.\n"
 #De esta manera obtengo todos los tipos de locales que hay para elegir
 tiposrestaurante = []
 for local in locales:
@@ -35,7 +35,7 @@ for local in locales:
 
 pausa=raw_input("\n --------------------------------------------------------- \n")
 #Cuenta cuantos locales con estrellas Michelín hay por cada población.
-
+print "Se mostrarán cuantos locales con estrellas Michelín hay por cada población.\n"
 localidades = []
 for local in locales:
 #	Si no está la localidad en localidades se agrega a la lista
@@ -61,6 +61,7 @@ cont = raw_input("Presiona enter para continuar.")
 pausa=raw_input("\n --------------------------------------------------------- \n")
 
 #Busca cuales son los locales recomendados por guías turísticas e indica si estos tienen bodega privada o no.
+print "Se mostrará a continuación los locales recomendados por guías turísticas y se mostrará si tienen bodega privada o no\n"
 for local in locales:
 	if local.find("room").text != None:
 		if local.find("bodega").text != None:
@@ -68,25 +69,25 @@ for local in locales:
 		else:
 			print "El local " + str(local.find("documentName").text) + " dispone de habitaciones pero no de bodega propia."
 
+pausa=raw_input("\n --------------------------JSON----------------------------- \n")
 #JSON
 import json
 f=open("alojamientos.json","r")
 doc1 = json.load(f)
 hotel = raw_input("Dame el nombre de un alojamiento: ")
 
-pausa=raw_input("\n --------------------------------------------------------- \n")
-
 #Dado el nombre de un hotel, mostrar su nombre, dirección, web y descripción en el siguiente formato:
 #HOTEL: “NOMBRE HOTEL”
 #SITUADA EN LA “LOCALIDAD” DE DONDE SEA EN LA CALLE/AVENIDA/PLAZA”
 #“DESCRIPCION”
 #VISITA “WEB DEL HOTEL” PARA MÁS INFORMACIÓN.
+print "Introduce el nombre de un hotel y se mostrará información relevante sobre el mismo.\n"
 for aloj in doc1:
 	if aloj["documentName"] == hotel:
 		print "HOTEL: " + aloj["documentName"]
 		print "SITUADA EN LA LOCALIDAD DE " + aloj["municipality"] + " EN LA DIRECCION " + aloj["address"]
-		if aloj["documentDescription"] != None:
-			print aloj["documentDescription"]
+		if aloj["turismDescription"] != None:
+			print aloj["turismDescription"]
 		else:
 			print aloj["turismDescription"]
 		if aloj["web"] != None:
@@ -96,6 +97,7 @@ pausa=raw_input("\n --------------------------------------------------------- \n
 
 #Dado el número de estrellas concreto, mostrar en el formato anterior los hoteles ordenados alfabéticamente por la localidad
 #en la que se encuentran.
+print "Cuando introduzcas un número de estrellas concreto, se mostraran los hoteles ordenados alfabéticamente en el formato del apartado anterior.\n"
 estrellas = str(raw_input("Dame un número de estrellas: "))
 hoteles = []
 #Almacenamos los hoteles que coinciden con la categoría de entrada
@@ -113,7 +115,15 @@ for hot in hoteles:
 for ciudad in sorted(ciudades):
 	for hot in hoteles:
 		if ciudad == str(hot["municipality"]):
-			print ciudad + " - " + str(hot["municipality"])
+			print "HOTEL: " + hot["documentName"]
+			print "SITUADA EN LA LOCALIDAD DE " + hot["municipality"] + " EN LA DIRECCION " + hot["address"]
+			if hot["turismDescription"] != None:
+				print hot["turismDescription"]
+			else:
+				print hot["turismDescription"]
+			if hot["web"] != None:
+				print "VISITA " + hot["web"] + " PARA MAS INFORMACION\n\
+				\n"
 
 pausa=raw_input("\n --------------------------------------------------------- \n")
 
