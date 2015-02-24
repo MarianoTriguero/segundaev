@@ -115,11 +115,9 @@ for hot in hoteles:
 for ciudad in sorted(ciudades):
 	for hot in hoteles:
 		if ciudad == str(hot["municipality"]):
-			print "HOTEL: " + hot["documentName"]
-			print "SITUADA EN LA LOCALIDAD DE " + hot["municipality"] + " EN LA DIRECCION " + hot["address"]
+			print "HOTEL: " + hot["documentName"] + "\n"
+			print "SITUADA EN LA LOCALIDAD DE " + hot["municipality"] + " EN LA DIRECCION " + hot["address"] + "\n"
 			if hot["turismDescription"] != None:
-				print hot["turismDescription"]
-			else:
 				print hot["turismDescription"]
 			if hot["web"] != None:
 				print "VISITA " + hot["web"] + " PARA MAS INFORMACION\n\
@@ -129,7 +127,7 @@ pausa=raw_input("\n --------------------------------------------------------- \n
 
 #Necesitamos saber cual es el ranking de las mejores ciudades para hacer surf. Para ello contaremos las ciudades que tengan 
 #más alojamientos con posibilidad de hacer surf y las ordenaremos en orden descendente.
-
+print "Se mostrará el ranking de las ciudades con más posibilidades de hacer surf.\n"
 surf = []
 ciudadsurf = {}
 #Buscamos los alojamientos con surfing
@@ -156,7 +154,7 @@ pausa=raw_input("\n --------------------------------------------------------- \n
 #XML + JSON
 
 #Dado el nombre de un alojamiento, muestra los locales situados en la misma localidad que el alojamiento.
-
+print "Se dará el nombre de un alojamiento y acontinuación se mostrarán los restaurantes de la misma localidad.\n"
 #Obtenemos la ciudad de alojamiento
 entrada = raw_input("Dame el nombre de un alojamiento: ")
 for x in doc1:
@@ -176,7 +174,7 @@ for rest in restaurantes:
 pausa=raw_input("\n --------------------------------------------------------- \n")
 
 #Muestra 5 posibles combinaciones de alojamiento y restaurante para discapacitados.
-
+print "Se mostrarán cinco combinaciones aleatorias de alojamiento y restaurante para discapacitados.\n"
 #Buscamos los alojamientos con accesibilidad
 alojdisc = []
 for x in doc1:
@@ -201,6 +199,7 @@ pausa=raw_input("\n --------------------------------------------------------- \n
 #(Objetos que poseen la marca)”.
 
 #Buscamos las marcas en la lista de alojamientos
+print "Se contarán la cantidad de marcas en ambos archivos(la segunda parte del archivo no esta disponible aún).\n"
 marcas = {}
 for aloj in doc1:
 	if str(aloj["marks"]) not in marcas and aloj["marks"] != None :
