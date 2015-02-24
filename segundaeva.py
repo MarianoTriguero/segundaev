@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from lxml import etree
+from random import randint
 from collections import OrderedDict
 doc = etree.parse("restaurantes.xml")
 raiz = doc.getroot()
@@ -158,10 +159,40 @@ for local in locales:
 	if str(local.find("municipality").text) == objetivo:
 		restaurantes.append(local)
 
+#Mostramos los locales
 for rest in restaurantes:
 	print rest.find("documentName").text
 
+pausa=raw_input("\n --------------------------------------------------------- \n")
 
+#Muestra 5 posibles combinaciones de alojamiento y restaurante para discapacitados.
+
+#Buscamos los alojamientos con accesibilidad
+alojdisc = []
+for x in doc1:
+	if str(x["accesibility"]) != "":
+		alojdisc.append(x)
+
+#Buscamos los locales con accesibilidad
+restdisc = []
+for local in locales:
+	if local.find("accesibility").text != None:
+		restdisc.append(local)
+		
+for x in xrange(0,5):
+	print "Restaurante " + str(restdisc[randint(0,len(alojdisc) -1)].find("documentName").text) + " y alojamiento " + str(alojdisc[randint(0,len(alojdisc) - 1)]["documentName"])
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 
