@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from lxml import etree
+import operator
 doc = etree.parse("restaurantes.xml")
 raiz = doc.getroot()
 
@@ -92,7 +93,8 @@ for aloj in doc:
 
 print " --------------------------------------------------------------- "
 
-#Dado el número de estrellas concreto, mostrar en el formato anterior los hoteles ordenados alfabéticamente por la localidad en la que se encuentran.
+#Dado el número de estrellas concreto, mostrar en el formato anterior los hoteles ordenados alfabéticamente por la localidad
+#en la que se encuentran.
 estrellas = str(raw_input("Dame un número de estrellas: "))
 hoteles = []
 #Almacenamos los hoteles que coinciden con la categoría de entrada
@@ -112,12 +114,23 @@ for ciudad in sorted(ciudades):
 		if ciudad == str(hot["municipality"]):
 			print ciudad + " - " + str(hot["municipality"])
 
+#Necesitamos saber cual es el ranking de las mejores ciudades para hacer surf. Para ello contaremos las ciudades que tengan 
+#más alojamientos con posibilidad de hacer surf y las ordenaremos en orden descendente.
 
+surf = []
+ciudadsurf = {}
+#Buscamos los alojamientos con surfing
+for aloj in doc:
+	if str(aloj["surfing"]) != "":
+		surf.append(aloj)
 
-
-
-
-
-
+#Contamos las ciudades con alojamientos con surfing
+for s in surf:
+	if str(s["municipality"]) not in ciudadsurf:
+		ciudadsurf[str(s["municipality"])] = 1
+	else:
+		ciudadsurf[str(s["municipality"])] = ciudadsurf[str(s["municipality"])] + 1
+			
+#Por hacer: Crear una tupla para almacenar las ciudades ordenadas y mostrarlas
 
 
