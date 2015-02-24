@@ -178,21 +178,37 @@ restdisc = []
 for local in locales:
 	if local.find("accesibility").text != None:
 		restdisc.append(local)
-		
+
+#Usamos números aleatorios para acceder a 5 locales y 5 alojamientos aleatoriamente y los mostramos
 for x in xrange(0,5):
 	print "Restaurante " + str(restdisc[randint(0,len(alojdisc) -1)].find("documentName").text) + " y alojamiento " + str(alojdisc[randint(0,len(alojdisc) - 1)]["documentName"])
+
+pausa=raw_input("\n --------------------------------------------------------- \n")
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+#¿Cuántos alojamientos y restaurantes poseen la misma marca? Muestra solamente las marcas existentes
+#en ambos archivos. Además debes de almacenar las marcas que no coincidan para después mostrarlas con el formato:
+#“La marca (marca) no coincide en ambos archivos, los locales o restaurantes que la poseen son:
+#(Objetos que poseen la marca)”.
+
+#Buscamos las marcas en la lista de alojamientos
+marcas = {}
+for aloj in doc1:
+	if str(aloj["marks"]) not in marcas and aloj["marks"] != None :
+		marcas[str(aloj["marks"])] = 1
+	elif aloj["marks"] != None:
+		marcas[str(aloj["marks"])] = marcas[str(aloj["marks"])] + 1	
+#Buscamos las marcas en la lista de restaurantes
+for local in locales:
+	if str(local.find("marks").text) not in marcas and local.find("marks").text != None:
+		marcas[str(local.find("marks").text)] = 1
+	elif local.find("marks").text != None:
+		marcas[str(local.find("marks").text)] = marcas[str(local.find("marks").text)] + 1
+
+#Mostramos las marcas y la cantidad de repeticiones
+for x in marcas:
+	print "Marca: " + x + " se repite " + str(marcas[x]) + " veces."
+
+
 
 
 
