@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from lxml import etree
-import operator
+from collections import OrderedDict
 doc = etree.parse("restaurantes.xml")
 raiz = doc.getroot()
 
@@ -131,6 +131,14 @@ for s in surf:
 	else:
 		ciudadsurf[str(s["municipality"])] = ciudadsurf[str(s["municipality"])] + 1
 			
-#Por hacer: Crear una tupla para almacenar las ciudades ordenadas y mostrarlas
+#Con la ayuda de OrderedDict conseguimos obtener los datos de un diccionario ordenados
+
+ciudadsurfsorted = OrderedDict(sorted(ciudadsurf.items(), key=lambda t: t[1], reverse=True))
+
+for x in ciudadsurfsorted:
+	print x + " - " + str(ciudadsurfsorted[x]) + " alojamientos habilitados para surf."
+
+
+
 
 
