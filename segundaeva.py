@@ -201,7 +201,7 @@ pausa=raw_input("\n --------------Presiona enter para continuar-----------------
 #(Objetos que poseen la marca)”.
 
 #Buscamos las marcas en la lista de alojamientos
-print "Se contarán la cantidad de marcas en ambos archivos(la segunda parte del archivo no esta disponible aún).\n"
+pausa= raw_input("Se contarán la cantidad de marcas en ambos archivos.\n")
 marcasaloj = {}
 for aloj in doc1:
 	if str(aloj["marks"]) not in marcasaloj and aloj["marks"] != None :
